@@ -26,6 +26,9 @@ export class Token {
 
   @Prop()
   balanceFormatted: string;
+
+  @Prop()
+  robloxlogo: string;
 }
 
 export const TokenSchema = SchemaFactory.createForClass(Token);
