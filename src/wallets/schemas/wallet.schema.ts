@@ -14,6 +14,9 @@ export class Wallet {
 
   @Prop({ default: [], type: [Token] })
   tokens: Token[];
+
+  @Prop({ required: true, unique: true })
+  walletId: string;
 }
 
 export const WalletSchema = SchemaFactory.createForClass(Wallet);

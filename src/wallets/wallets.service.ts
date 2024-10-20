@@ -1,17 +1,20 @@
 import { Injectable, Query } from '@nestjs/common';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { HttpService } from '@nestjs/axios';
-import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 import { Wallet } from './schemas/wallet.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { GetWalletsQueryDto } from './dto/get-wallets-query.dto';
+import { Coinbase, Wallet as CoinbaseWallet } from '@coinbase/coinbase-sdk';
 
 @Injectable()
 export class WalletsService {
-  private readonly apiUrl: string;
-  private readonly authToken: string;
+  //   private readonly apiUrl: string;
+  //   private readonly authToken: string;
+  private readonly coinbaseApiKeyName: string;
+  private readonly coinbaseApiPrivateKey: string;
+  private readonly coinbaseClient: Coinbase;
 
   constructor(
     private readonly httpService: HttpService,
@@ -19,8 +22,22 @@ export class WalletsService {
     @InjectModel(Wallet.name)
     private walletModel: Model<Wallet>,
   ) {
-    this.apiUrl = this.configService.get<string>('THIRDWEB_API_URL');
-    this.authToken = this.configService.get<string>('AUTH_TOKEN');
+    // this.apiUrl = this.configService.get<string>('THIRDWEB_API_URL');
+    // this.authToken = this.configService.get<string>('AUTH_TOKEN');
+
+    this.coinbaseApiKeyName = this.configService.get<string>(
+      'COINBASE_CDP_API_KEY_NAME',
+    );
+    this.coinbaseApiPrivateKey = this.configService.get<string>(
+      'COINBASE_CDP_API_PRIVATE_KEY',
+    );
+
+    this.coinbaseClient = new Coinbase({
+      apiKeyName: this.coinbaseApiKeyName,
+      privateKey: this.coinbaseApiPrivateKey,
+    });
+
+    Coinbase.useServerSigner = true;
   }
 
   async create(createWalletDto: CreateWalletDto) {
@@ -34,22 +51,20 @@ export class WalletsService {
         return existingWallet; // Return the existing wallet if found
       }
 
-      // If not found, create a new wallet
-      const response = await firstValueFrom(
-        this.httpService.post(
-          `${this.apiUrl}/backend-wallet/create`,
-          {},
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: this.authToken,
-            },
-          },
-        ),
-      );
+      // Create coinbase wallet
+      const wallet = await CoinbaseWallet.create();
+
+      // Fund your wallet using a faucet.
+      await wallet.faucet();
+      await wallet.faucet(Coinbase.assets.Usdc);
+
+      //   const balances = await wallet.listBalances();
+
+      console.log(wallet);
 
       const user = new this.walletModel({
-        walletAddress: response.data.result.walletAddress,
+        walletAddress: wallet['model'].default_address.address_id,
+        walletId: wallet['model'].id,
         robloxUserId: createWalletDto.robloxUserId,
         tokens: [
           {
@@ -57,31 +72,21 @@ export class WalletsService {
             symbol: 'ETH',
             name: 'Ether',
             decimals: 18,
-            balance: '0',
-            chain: 'ethereum',
+            balance: '10000000000000000',
+            chain: Coinbase.networks.BaseSepolia,
             logo: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1796501428',
-            balanceFormatted: '0',
+            balanceFormatted: '0.01',
           },
         ],
-        // eth: {
-        //   name: 'Ether',
-        //   symbol: 'ETH',
-        //   decimals: 18,
-        //   value: '3264849471955923',
-        //   displayValue: '0.003264849471955923',
-        // },
       });
 
       await user.save();
 
-      //   return response.data; // Return the response data from the API
       return user;
     } catch (error) {
       console.error('Error creating wallet:', error);
-      throw new Error('Failed to create wallet'); // Handle error appropriately
+      throw new Error('Failed to create wallet');
     }
-
-    // return newWallet; // Return the created wallet
   }
 
   async findAll(@Query() queryDto: GetWalletsQueryDto): Promise<Wallet[]> {
@@ -90,9 +95,9 @@ export class WalletsService {
     if (robloxUserIds && robloxUserIds.length > 0) {
       return this.walletModel
         .find({ robloxUserId: { $in: robloxUserIds } })
-        .exec(); // Query for wallets with matching robloxUserIds
+        .exec();
     }
 
-    return this.walletModel.find().exec(); // Return all wallets
+    return this.walletModel.find().exec();
   }
 }
