@@ -85,6 +85,14 @@ export class WalletsService {
   }
 
   async findAll(@Query() queryDto: GetWalletsQueryDto): Promise<Wallet[]> {
-    return this.walletModel.find(queryDto).exec(); // Return all wallets
+    const { robloxUserIds } = queryDto;
+
+    if (robloxUserIds && robloxUserIds.length > 0) {
+      return this.walletModel
+        .find({ robloxUserId: { $in: robloxUserIds } })
+        .exec(); // Query for wallets with matching robloxUserIds
+    }
+
+    return this.walletModel.find().exec(); // Return all wallets
   }
 }
