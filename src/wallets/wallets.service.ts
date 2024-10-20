@@ -104,4 +104,8 @@ export class WalletsService {
 
     return this.walletModel.find().exec();
   }
+
+  async getWalletByRobloxUserId(robloxUserId: string) {
+    return this.walletModel.findOne({ robloxUserId: robloxUserId }).exec();
+  }
 }

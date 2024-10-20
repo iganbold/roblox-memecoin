@@ -3,6 +3,7 @@ import { CoinsService } from './coins.service';
 import { CoinsController } from './coins.controller';
 import { Coin, CoinSchema } from './schemas/coin.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { WalletsModule } from 'src/wallets/wallets.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { MongooseModule } from '@nestjs/mongoose';
         },
       },
     ]),
+    WalletsModule,
   ],
   providers: [CoinsService],
   controllers: [CoinsController],
