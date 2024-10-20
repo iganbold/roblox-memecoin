@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { Token } from './token.schema';
 
 export type WalletDocument = HydratedDocument<Wallet>;
 
@@ -10,6 +11,9 @@ export class Wallet {
 
   @Prop({ required: true, unique: true })
   robloxUserId: string;
+
+  @Prop({ default: [], type: [Token] })
+  tokens: Token[];
 }
 
 export const WalletSchema = SchemaFactory.createForClass(Wallet);

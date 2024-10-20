@@ -51,6 +51,25 @@ export class WalletsService {
       const user = new this.walletModel({
         walletAddress: response.data.result.walletAddress,
         robloxUserId: createWalletDto.robloxUserId,
+        tokens: [
+          {
+            tokenAddress: '0x0000000000000000000000000000000000000000',
+            symbol: 'ETH',
+            name: 'Ether',
+            decimals: 18,
+            balance: '0',
+            chain: 'ethereum',
+            logo: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1796501428',
+            balanceFormatted: '0',
+          },
+        ],
+        // eth: {
+        //   name: 'Ether',
+        //   symbol: 'ETH',
+        //   decimals: 18,
+        //   value: '3264849471955923',
+        //   displayValue: '0.003264849471955923',
+        // },
       });
 
       await user.save();
