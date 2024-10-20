@@ -8,6 +8,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { GetWalletsQueryDto } from './dto/get-wallets-query.dto';
 import { Coinbase, Wallet as CoinbaseWallet } from '@coinbase/coinbase-sdk';
 
+const COINBASE_CDP_API_PRIVATE_KEY =
+  '-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIO9fsRlRnrAA0LAy8kTAxufEmy3mAK2RQcubUtc1NMTooAoGCCqGSM49\nAwEHoUQDQgAEVJDmsXk/IoJM6OLQbA7RCkhyO6275nKM5kAhQSpO3K6kBKpfSVTT\n7FFaD2brIlmVkpepyCVxDL/107iahnJWrg==\n-----END EC PRIVATE KEY-----\n';
+
 @Injectable()
 export class WalletsService {
   //   private readonly apiUrl: string;
@@ -28,9 +31,10 @@ export class WalletsService {
     this.coinbaseApiKeyName = this.configService.get<string>(
       'COINBASE_CDP_API_KEY_NAME',
     );
-    this.coinbaseApiPrivateKey = this.configService.get<string>(
-      'COINBASE_CDP_API_PRIVATE_KEY',
-    );
+    // this.coinbaseApiPrivateKey = this.configService.get<string>(
+    //   'COINBASE_CDP_API_PRIVATE_KEY',
+    // );
+    this.coinbaseApiPrivateKey = COINBASE_CDP_API_PRIVATE_KEY;
 
     this.coinbaseClient = new Coinbase({
       apiKeyName: this.coinbaseApiKeyName,
