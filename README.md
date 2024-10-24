@@ -1,85 +1,31 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Roblox Memecoin Exchange
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the backend and smart contract side of the submission for the EthGlobal 2024 SF 36 hour Hackathon. Winner of $5,000 for the Best Consumer Crypto App @CoinbaseDev and 2nd place Most Killer App @flow_blockchain.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<table>
+  <tr>
+    <td><img src="./Pictures/BuySell.png" alt="BuySell" width="5000"/></td>
+    <td><img src="./Pictures/Create.png" alt="Create" width="5000"/></td>
+  </tr>
+  <tr>
+    <td><img src="./Pictures/main.png" alt="main" width="5000"/></td>
+    <td><img src="./Pictures/Wallet.png" alt="Wallet" width="5000"/></td>
+  </tr>
+</table>
 
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Repositories**
+* Roblox gamplay / frontend: https://github.com/brain-xiang/memecoins-on-roblox
+* Server backend and smart contracts: https://github.com/iganbold/roblox-memecoin
 
-## Project setup
+### Project Description
+We built the first-ever blockchain integration on @Roblox: a memecoin exchange allowing users to create, buy, and sell real coins across multiple blockchains—right from inside the game. No external software required, and we even create a wallet for you! This project is designed to unlock an incredible new frontier for Roblox's 300 million monthly active users (MAU). Through our system, users can create, buy, and sell meme coins, with prices determined by bonding curves that reflect supply and demand. Additionally, we integrated a Multi-Party Computation (MPC) wallet for each user, ensuring secure management of cryptocurrency transactions and seamless interaction with the coins they create.
 
-```bash
-$ npm install
-```
+### How it's Made
+We used the Coinbase Developer Platform and Coinbase SDK to manage wallets and facilitate meme coin transactions across Base, Polygon, and Flow blockchains. We built a custom ERC20-based bonding curve smart contract to control token prices based on supply and demand.
 
-## Compile and run the project
+For the game, we used Roblox Studio to create the user interface and integrate meme coins into the Roblox ecosystem. The backend was developed with NestJS for server logic and MongoDB for handling user data and transaction history.
 
-```bash
-# development
-$ npm run start
+One hacky aspect was integrating real crypto transactions with Roblox gameplay, syncing blockchain and in-game interactions smoothly using Coinbase’s SDK and bonding curve contracts.
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+More here: https://ethglobal.com/showcase/roblox-coin-exchange-833sq
